@@ -570,7 +570,7 @@ body.bg-night::before{
 
     <input id="secret-username"
            type="text"
-           placeholder="mona أو mohamed"
+           placeholder="اكتب اليوزر..."
            style="padding:10px; border-radius:12px; border:1px solid #ffd3e7; margin-bottom:8px;">
 
     <button id="secret-login-btn">دخول</button>
@@ -895,22 +895,27 @@ body.bg-night::before{
         passwordInput.focus();
       }
     });
-// فتح شاشة الشات السرّي لما ندوس على "منونه"
+// فتح الشات السري عند الضغط على منونه
 const monaNameSpan = document.querySelector(".mona-name");
 const secretLoginSection = document.getElementById("secret-login");
 
-if (monaNameSpan && secretLoginSection){
+if (monaNameSpan) {
   monaNameSpan.style.cursor = "pointer";
   monaNameSpan.addEventListener("click", () => {
-    const unlocked = localStorage.getItem("siteUnlocked");
-    if (!unlocked){
-      alert("افتح الموقع بالباسورد الأول يا جميل ❤");
+
+    const SECRET_CODE = "4/9/2025";
+    const code = prompt("اكتب الكود السري:", "");
+
+    if (code !== SECRET_CODE) {
+      alert("الكود غلط ❌");
       return;
     }
+
     secretLoginSection.classList.remove("hidden");
     secretLoginSection.scrollIntoView({ behavior: "smooth" });
   });
 }
+
 
 
      /*********** تنسيق التاريخ والوقت + الساعة اللي فوق ***********/
@@ -1101,172 +1106,168 @@ setTimeout(setupVideoListeners, 500);
   const gallery = document.getElementById("gallery");
   const todayBox  = document.getElementById("today-memories");
   const todayList = document.getElementById("today-memories-list");
-  // عناصر الشات السرّي
-  const secretLoginSection = document.getElementById("secret-login");
-  const secretChatScreen  = document.getElementById("secret-chat-screen");
-  const secretUsernameInput = document.getElementById("secret-username");
-  const secretLoginBtn      = document.getElementById("secret-login-btn");
-  const chatBox      = document.getElementById("chat-box");
-  const chatInput    = document.getElementById("chat-input");
-  const chatSendBtn  = document.getElementById("chat-send-btn");
+// عناصر الشات السرّي
+const secretLoginSection = document.getElementById("secret-login");
+const secretChatScreen  = document.getElementById("secret-chat-screen");
+const secretUsernameInput = document.getElementById("secret-username");
+const secretLoginBtn      = document.getElementById("secret-login-btn");
+const chatBox      = document.getElementById("chat-box");
+const chatInput    = document.getElementById("chat-input");
+const chatSendBtn  = document.getElementById("chat-send-btn");
 
-  let currentUser = null; // mona أو mohamed
+let currentUser = null; // mona أو mohamed
 
+function isSameMonthDay(d1, d2){
+  return d1.getMonth() === d2.getMonth() &&
+         d1.getDate() === d2.getDate();
+}
 
-  function isSameMonthDay(d1, d2){
-    return d1.getMonth() === d2.getMonth() &&
-           d1.getDate() === d2.getDate();
+// 🗑 دالة مسح ذكرى
+async function deleteMemory(id, article) {
+  const sure = confirm("متأكد إنك عايز تمسح الذكرى دي؟");
+  if (!sure) return;
+
+  const { error } = await supabase
+    .from("memories")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error(error);
+    alert("حصل خطأ أثناء الحذف 😢");
+    return;
   }
 
+  article.remove();
+}
 
-  // 🗑 دالة مسح ذكرى
-  async function deleteMemory(id, article) {
-    const sure = confirm("متأكد إنك عايز تمسح الذكرى دي؟");
-    if (!sure) return;
+// 🧹 مسح الرسائل الأقدم من 24 ساعة
+async function cleanupOldMessages(){
+  const since = new Date(Date.now() - 24*60*60*1000).toISOString();
+  await supabase
+    .from("secret_chat")
+    .delete()
+    .lt("created_at", since);
+}
 
-    const { error } = await supabase
-      .from("memories")
-      .delete()
-      .eq("id", id);
+// تحميل رسائل الشات
+async function loadChatMessages(){
+  if (!chatBox) return;
 
-    if (error) {
-      console.error(error);
-      alert("حصل خطأ أثناء الحذف 😢");
+  const since = new Date(Date.now() - 24*60*60*1000).toISOString();
+
+  const { data, error } = await supabase
+    .from("secret_chat")
+    .select("*")
+    .gte("created_at", since)
+    .order("created_at", { ascending: true });
+
+  if (error){
+    console.error(error);
+    return;
+  }
+
+  chatBox.innerHTML = "";
+
+  data.forEach(row=>{
+    const wrap = document.createElement("div");
+    wrap.style.marginBottom = "8px";
+    wrap.style.textAlign = (row.sender === currentUser) ? "right" : "left";
+
+    const name = document.createElement("div");
+    name.style.fontSize = "0.8rem";
+    name.style.opacity = "0.7";
+    name.textContent =
+      row.sender === "mona" ? "منى" :
+      row.sender === "mohamed" ? "محمد" :
+      row.sender;
+
+    const bubble = document.createElement("div");
+    bubble.style.display = "inline-block";
+    bubble.style.padding = "6px 10px";
+    bubble.style.borderRadius = "12px";
+    bubble.style.maxWidth = "80%";
+    bubble.style.background = (row.sender === currentUser) ? "#ff80c1" : "#fff7fb";
+    bubble.style.color = (row.sender === currentUser) ? "#fff" : "#4a154a";
+    bubble.textContent = row.message;
+
+    wrap.appendChild(name);
+    wrap.appendChild(bubble);
+    chatBox.appendChild(wrap);
+  });
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// إرسال رسالة
+async function sendChatMessage(){
+  if (!currentUser){
+    alert("ادخل باسم المستخدم الأول 💬");
+    return;
+  }
+  const text = chatInput.value.trim();
+  if (!text) return;
+
+  const { error } = await supabase
+    .from("secret_chat")
+    .insert({ sender: currentUser, message: text });
+
+  if (error){
+    console.error(error);
+    alert("في مشكلة حصلت أثناء إرسال الرسالة 😢");
+    return;
+  }
+
+  chatInput.value = "";
+  await loadChatMessages();
+}
+
+// إعداد الشات السرّي (نسخة مصححة)
+function setupSecretChat() {
+  if (!secretLoginBtn) return;
+
+  secretLoginBtn.addEventListener("click", async () => {
+
+    const name = (secretUsernameInput.value || "").trim().toLowerCase();
+
+    if (!name) {
+      alert("اكتب اليوزر الأول");
       return;
     }
 
-    // شيل الكارت من الصفحة
-    article.remove();
-  }
+    // اليوزرات المسموح بها
+    const allowedUsers = ["mona", "mohamed"];
 
-  // 🧹 مسح الرسائل الأقدم من 24 ساعة
-  async function cleanupOldMessages(){
-    const since = new Date(Date.now() - 24*60*60*1000).toISOString();
-    await supabase
-      .from("secret_chat")
-      .delete()
-      .lt("created_at", since);
-  }
-
-  // تحميل رسائل الشات
-  async function loadChatMessages(){
-    if (!chatBox) return;
-
-    const since = new Date(Date.now() - 24*60*60*1000).toISOString();
-
-    const { data, error } = await supabase
-      .from("secret_chat")
-      .select("*")
-      .gte("created_at", since)
-      .order("created_at", { ascending: true });
-
-    if (error){
-      console.error(error);
+    if (!allowedUsers.includes(name)) {
+      alert("بيانات الدخول غير صحيحة");
       return;
     }
 
-    chatBox.innerHTML = "";
+    currentUser = name;
 
-    data.forEach(row=>{
-      const wrap = document.createElement("div");
-      wrap.style.marginBottom = "8px";
-      wrap.style.textAlign = (row.sender === currentUser) ? "right" : "left";
+    secretLoginSection.classList.add("hidden");
+    secretChatScreen.classList.remove("hidden");
 
-      const name = document.createElement("div");
-      name.style.fontSize = "0.8rem";
-      name.style.opacity = "0.7";
-      name.textContent =
-        row.sender === "mona" ? "منى" :
-        row.sender === "mohamed" ? "محمد" :
-        row.sender;
-
-      const bubble = document.createElement("div");
-      bubble.style.display = "inline-block";
-      bubble.style.padding = "6px 10px";
-      bubble.style.borderRadius = "12px";
-      bubble.style.maxWidth = "80%";
-      bubble.style.background = (row.sender === currentUser) ? "#ff80c1" : "#fff7fb";
-      bubble.style.color = (row.sender === currentUser) ? "#fff" : "#4a154a";
-      bubble.textContent = row.message;
-
-      wrap.appendChild(name);
-      wrap.appendChild(bubble);
-      chatBox.appendChild(wrap);
-    });
-
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }
-
-  // إرسال رسالة
-  async function sendChatMessage(){
-    if (!currentUser){
-      alert("ادخل باسم المستخدم الأول 💬");
-      return;
-    }
-    const text = chatInput.value.trim();
-    if (!text) return;
-
-    const { error } = await supabase
-      .from("secret_chat")
-      .insert({ sender: currentUser, message: text });
-
-    if (error){
-      console.error(error);
-      alert("في مشكلة حصلت أثناء إرسال الرسالة 😢");
-      return;
-    }
-
-    chatInput.value = "";
+    await cleanupOldMessages();
     await loadChatMessages();
-  }
+  });
+}
 
-  // إعداد الشات السرّي
-  function setupSecretChat(){
-    if (!secretLoginBtn) return;
-
-    // لو في يوزر محفوظ من قبل
-    const saved = localStorage.getItem("secretUser");
-    if (saved === "mona" || saved === "mohamed"){
-      currentUser = saved;
-      if (secretLoginSection) secretLoginSection.classList.add("hidden");
-      if (secretChatScreen)  secretChatScreen.classList.remove("hidden");
-      cleanupOldMessages();
-      loadChatMessages();
+// زر إرسال الرسالة + إنتر
+if (chatSendBtn && chatInput){
+  chatSendBtn.addEventListener("click", sendChatMessage);
+  chatInput.addEventListener("keydown", e=>{
+    if (e.key === "Enter"){
+      e.preventDefault();
+      sendChatMessage();
     }
+  });
+}
 
-    // زر الدخول باسم المستخدم
-    secretLoginBtn.addEventListener("click", async () => {
-      const val = (secretUsernameInput.value || "").trim().toLowerCase();
+// تحديث الرسائل كل 5 ثواني
+setInterval(loadChatMessages, 5000);
 
-      if (val !== "mona" && val !== "mohamed"){
-        alert("مسموح بس باسم mona أو mohamed 😊");
-        return;
-      }
 
-      currentUser = val;
-      localStorage.setItem("secretUser", val);
-
-      if (secretLoginSection) secretLoginSection.classList.add("hidden");
-      if (secretChatScreen)  secretChatScreen.classList.remove("hidden");
-
-      await cleanupOldMessages();
-      await loadChatMessages();
-    });
-
-    // زر إرسال الرسالة + إنتر
-    if (chatSendBtn && chatInput){
-      chatSendBtn.addEventListener("click", sendChatMessage);
-      chatInput.addEventListener("keydown", e=>{
-        if (e.key === "Enter"){
-          e.preventDefault();
-          sendChatMessage();
-        }
-      });
-    }
-
-    // تحديث الرسائل كل 5 ثواني
-    setInterval(loadChatMessages, 5000);
-  }
 
 
   // 🟢 تحميل الذكريات المحفوظة من Supabase عند فتح الصفحة
