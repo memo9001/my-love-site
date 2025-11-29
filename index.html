@@ -281,19 +281,18 @@ body::before{
 
 
    .media-card{
-  background:rgba(0,0,0,0.55); /* أسود بشفافية 55% */
-} 
+  background: transparent;      /* 🟢 شفاف */
   border-radius:24px;
   overflow:hidden;
   box-shadow:0 10px 22px rgba(0,0,0,0.12);
-  border:1px solid rgba(255,211,231,0.6); /* كمان خفّفت لون البوردر */
-  backdrop-filter: blur(3px); /* لمسة نعومة */
-   } 
+  border:1px solid rgba(255,211,231,0.6);
+  backdrop-filter: blur(3px);
+} 
 
     .media-wrapper{
   max-height:320px;
   overflow:hidden;
-  background: rgba(0,0,0,0.55) !important;
+  background: transparent;   /* 🟢 شفاف */
 } 
 
     .media-wrapper img,
@@ -306,7 +305,11 @@ body::before{
       cursor:pointer;
     }
 
-    .media-caption{text-align:center;padding:12px 14px 14px;}
+    .media-caption{
+  text-align:center;
+  padding:12px 14px 14px;
+  background: rgba(0,0,0,0.55);        /* 🖤 أسود باهت */
+} 
     .media-caption strong{
       display:block;
       margin-bottom:6px;
@@ -1658,6 +1661,7 @@ setInterval(loadChatMessages, 5000);
 </body>
 
 </html>
+
 
 
 
