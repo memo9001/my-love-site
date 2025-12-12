@@ -1482,7 +1482,8 @@ setInterval(loadChatMessages, 5000);
   };
 
   // 🔼 رفع ذكرى جديدة
-  submitBtn.onclick = async () => {
+ 
+submitBtn.onclick = async () => {
   try {
     const file = fileInput.files[0];
     const desc = descInput.value || "";
@@ -1492,7 +1493,6 @@ setInterval(loadChatMessages, 5000);
       return;
     }
 
-    // 1) قيود بسيطة لحماية الرفع
     const MAX_MB = 50;
     if (file.size > MAX_MB * 1024 * 1024) {
       alert(`حجم الملف كبير أوي. حاول ملف أقل من ${MAX_MB}MB.`);
@@ -1505,7 +1505,6 @@ setInterval(loadChatMessages, 5000);
       return;
     }
 
-    // 2) sanitize لاسم الملف
     function sanitizeName(name) {
       return Date.now() + "-" + name
         .normalize("NFKD")
@@ -1515,172 +1514,45 @@ setInterval(loadChatMessages, 5000);
     }
     const fileName = sanitizeName(file.name);
 
-    // 3) UI feedback
-    const prev = submitBtn.textContent;
+    const prevText = submitBtn.textContent;
     submitBtn.textContent = "جارٍ الرفع...";
     submitBtn.disabled = true;
 
-    // 4) upload
     const { data, error: uploadError } = await supabase.storage
       .from("media")
-      .upload(fileName, file, { cacheControl: "3600", upsert: false });
+      .upload(fileName, file);
 
     if (uploadError) {
       console.error(uploadError);
-      alert("حصل خطأ أثناء الرفع: " + uploadError.message);
-      submitBtn.textContent = prev;
+      alert("حصل خطأ أثناء الرفع 😢");
+      submitBtn.textContent = prevText;
       submitBtn.disabled = false;
       return;
     }
 
-    // 5) get public url
-    const { data: pub } = supabase.storage.from("media").getPublicUrl(fileName);
+    const { data: pub } = supabase.storage
+      .from("media")
+      .getPublicUrl(fileName);
+
     const url = pub.publicUrl;
 
-    const fileType = file.type.startsWith("video") ? "video" : "image";
+    await supabase.from("memories").insert({
+      type: file.type.startsWith("video") ? "video" : "image",
+      url,
+      description: desc
+    });
 
-    // 6) حفظ في قاعدة البيانات
-    const { data: rows, error: dbError } = await supabase
-      .from("memories")
-      .insert({ type: fileType, url, description: desc })
-      .select()
-      .limit(1);
-
-    if (dbError) {
-      console.error(dbError);
-      alert("الملف اترفـع لكن حفظ البيانات حصل فيه مشكلة.");
-    }
-
-    // 7) عرض الكارت فورًا
-    const article = document.createElement("article");
-    article.className = "media-card";
-
-    const wrap = document.createElement("div");
-    wrap.className = "media-wrapper";
-
-    let el;
-    if (fileType === "video") {
-      el = document.createElement("video");
-      el.src = url;
-      el.controls = true;
-    } else {
-      el = document.createElement("img");
-      el.src = url;
-      el.alt = file.name;
-    }
-
-    wrap.appendChild(el);
-
-    const cap = document.createElement("div");
-    cap.className = "media-caption";
-
-    const p = document.createElement("p");
-    p.textContent = desc || "ذكرى جديدة 💗";
-    cap.appendChild(p);
-
-    article.appendChild(wrap);
-    article.appendChild(cap);
-    gallery.appendChild(article);
-
-    // reset
-    fileInput.value = "";
-    descInput.value = "";
-    submitBtn.textContent = prev;
-    submitBtn.disabled = false;
+    location.reload(); // أسهل حل لعرض الكارت بدون أي مشاكل
 
   } catch (err) {
     console.error(err);
-    alert("حصل خطأ غير متوقع.");
-    submitBtn.textContent = "رفع الذكرى 💘";
+    alert("خطأ غير متوقع!");
+  } finally {
     submitBtn.disabled = false;
+    submitBtn.textContent = "رفع الذكرى 💘";
   }
 };
-    if (dbError) {
-      console.error(dbError);
-      alert("الملف اترفـع بس حصل خطأ في حفظ البيانات 😢");
-    }
 
-    // عرض الكارت فورًا
-    const article = document.createElement("article");
-    article.className = "media-card";
-
-    const wrap = document.createElement("div");
-    wrap.className = "media-wrapper";
-
-    let el;
-    if (file.type.startsWith("video")) {
-      el = document.createElement("video");
-      el.src = url;
-      el.controls = true;
-    } else {
-      el = document.createElement("img");
-      el.src = url;
-    }
-
-    // فتح في اللايت بوكس
-    if (window.openLightbox) {
-      el.addEventListener("click", () =>
-        window.openLightbox({
-          type: fileType,
-          src: url,
-          title: "",
-          desc: desc || "ذكرى جديدة 💗",
-        })
-      );
-    }
-
-    wrap.appendChild(el);
-    const cap = document.createElement("div");
-    cap.className = "media-caption";
-
-    const p = document.createElement("p");
-    p.textContent = desc || "ذكرى جديدة 💗";
-    cap.appendChild(p);
-
-    // وقت الإضافة للكارت الجديد
-    if (window.formatDateTime) {
-      const t = document.createElement("p");
-      t.style.fontSize = "0.8rem";
-      t.style.marginTop = "4px";
-      t.style.opacity = "0.8";
-
-      let dt;
-      if (inserted && inserted.created_at) {
-        dt = new Date(inserted.created_at);
-      } else {
-        dt = new Date();
-      }
-
-      t.textContent = "وقت الإضافة: " + window.formatDateTime(dt);
-      cap.appendChild(t);
-    }
-
-    // زر مسح الذكرى للكروت الجديدة
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "🗑 مسح الذكرى";
-    delBtn.style.marginTop = "8px";
-    delBtn.style.fontSize = "0.8rem";
-    if (inserted && inserted.id) {
-      delBtn.onclick = () => deleteMemory(inserted.id, article);
-    }
-    cap.appendChild(delBtn);
-
-    article.appendChild(wrap);
-    article.appendChild(cap);
-
-
-    gallery.appendChild(article);
-
-    if (window.setupVideoListeners) {
-      setTimeout(window.setupVideoListeners, 100);
-    }
-
-    fileInput.value = "";
-    descInput.value = "";
-
-    submitBtn.textContent = "رفع الذكرى 💘";
-    submitBtn.disabled = false;
-  };
 
 
 </script>
