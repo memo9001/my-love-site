@@ -11,8 +11,16 @@
     body{
   font-family:"Cairo",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   min-height:100vh;
-  background:radial-gradient(circle at top,#050509,#050509 40%,#000 100%);
-  color:#e5e5e5;
+
+  background:
+    radial-gradient(circle at top,
+    #ffe3f1 0%,
+    #ffd4ea 30%,
+    #ffc1df 60%,
+    #ffb6d8 100%);
+
+  color:#7c2953;
+
   padding:16px;
   position:relative;
   overflow-x:hidden;
@@ -34,26 +42,45 @@ body::before{
   content:"";
   position:fixed;
   inset:0;
-  background:linear-gradient(to bottom,rgba(0,0,0,0.9),rgba(0,0,0,0.96));
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.15),
+      rgba(255,192,220,0.08)
+    );
+
   z-index:-2;
 }
 
 
     .container{max-width:900px;margin:0 auto;padding-bottom:40px;}
 
-   .card{
-    background:rgba(0,0,0,0.85);   /* الخلفية السودة اللي كانت موجودة زمان */
-    border-radius:26px;
-    padding:20px 16px;
-    box-shadow:0 14px 30px rgba(0,0,0,0.6);  /* ظل خفيف */
-    margin-bottom:22px;
-    border:1px solid rgba(255,255,255,0.08); /* بوردر خفيف */
-} 
+  .card{
+
+  background:
+    rgba(255,255,255,0.42);
+
+  backdrop-filter:
+    blur(14px);
+
+  border-radius:26px;
+
+  padding:20px 16px;
+
+  box-shadow:
+    0 10px 30px rgba(255,105,180,0.15);
+
+  margin-bottom:22px;
+
+  border:
+    1px solid rgba(255,255,255,0.5);
+}
 
        .hero{text-align:center;margin-bottom:18px;}
     .hero h1{
       font-size:1.6rem;
-      color:#ff4b6e; /* أحمر باهت يميل للحزن */
+      color:#ff4f93;
       margin-bottom:8px;
     }
 
@@ -398,6 +425,197 @@ body.bg-night::before{
     linear-gradient(to bottom,rgba(20,10,40,0.9),rgba(10,5,25,0.9));
 }
 
+/* =========================
+   MAIN CINEMATIC UI
+========================= */
+
+.birthday-ui{
+
+  position:relative;
+
+  margin-top:24px;
+
+  padding:30px;
+
+  border-radius:32px;
+
+  background:
+    rgba(255,255,255,0.35);
+
+  backdrop-filter:blur(18px);
+
+  border:
+    1px solid rgba(255,255,255,.5);
+
+  overflow:hidden;
+}
+
+.birthday-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:30px;
+
+  align-items:center;
+}
+
+.birthday-left h2{
+
+  font-size:4rem;
+
+  line-height:1;
+
+  color:#ff4f93;
+
+  text-shadow:
+    0 8px 20px rgba(255,105,180,.25);
+
+  margin-bottom:16px;
+}
+
+.date-pill{
+
+  display:inline-block;
+
+  padding:10px 24px;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff5c8d,
+      #ff2d6f
+    );
+
+  color:#fff;
+
+  font-weight:700;
+
+  margin-bottom:20px;
+
+  box-shadow:
+    0 10px 20px rgba(255,45,111,.25);
+}
+
+.action-buttons{
+
+  display:flex;
+
+  gap:12px;
+
+  flex-wrap:wrap;
+}
+
+.ui-btn{
+
+  border:none;
+
+  border-radius:999px;
+
+  padding:12px 20px;
+
+  font-size:.95rem;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.35s ease;
+
+  color:#fff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff6fa4,
+      #ff2f76
+    );
+
+  box-shadow:
+    0 10px 24px rgba(255,105,180,.25);
+}
+
+.ui-btn:hover{
+
+  transform:
+    translateY(-4px)
+    scale(1.04);
+}
+
+.birthday-right{
+
+  text-align:center;
+
+  position:relative;
+}
+
+.mona-frame{
+
+  width:260px;
+  height:260px;
+
+  margin:auto;
+
+  border-radius:50%;
+
+  padding:10px;
+
+  border:
+    3px dashed rgba(255,255,255,.9);
+
+  transform:rotate(-5deg);
+
+  overflow:hidden;
+
+  box-shadow:
+    0 10px 30px rgba(255,105,180,.25);
+}
+
+.mona-frame img{
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
+  border-radius:50%;
+}
+
+.dear-mona{
+
+  margin-top:16px;
+
+  font-size:1.4rem;
+
+  color:#ff4f93;
+
+  font-weight:700;
+
+  font-family:cursive;
+}
+
+@media(max-width:900px){
+
+  .birthday-grid{
+    grid-template-columns:1fr;
+  }
+
+  .birthday-left{
+    text-align:center;
+  }
+
+  .birthday-left h2{
+    font-size:3rem;
+  }
+
+  .action-buttons{
+    justify-content:center;
+  }
+}
     
 @media(max-width:600px){
       .card{padding:16px 12px;}
@@ -472,9 +690,196 @@ body.bg-night::before{
       font-size:0.85rem;
       cursor:pointer;
     }
+ /* =========================
+   CINEMATIC INTRO
+========================= */
+
+#intro-screen{
+  position:fixed;
+  inset:0;
+  z-index:999999;
+  background:
+    radial-gradient(circle at top,
+    #ffd6ea,
+    #ffc2dd,
+    #ffb1d3);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+
+  animation:introFadeOut 1.5s ease forwards;
+  animation-delay:5s;
+}
+
+@keyframes introFadeOut{
+  to{
+    opacity:0;
+    visibility:hidden;
+  }
+}
+
+.intro-content{
+  position:relative;
+  text-align:center;
+  z-index:3;
+}
+
+.cake-svg{
+  width:260px;
+  height:260px;
+}
+
+.draw{
+  fill:none;
+  stroke:#fff;
+  stroke-width:5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+
+  stroke-dasharray:500;
+  stroke-dashoffset:500;
+
+  animation:drawLine 1.5s ease forwards;
+}
+
+.line1{animation-delay:.2s;}
+.line2{animation-delay:.7s;}
+.line3{animation-delay:1.2s;}
+.line4{animation-delay:1.8s;}
+
+@keyframes drawLine{
+  to{
+    stroke-dashoffset:0;
+  }
+}
+
+.flame{
+  fill:#fff;
+  opacity:0;
+  transform-origin:center;
+  animation:flamePop .7s ease forwards;
+  animation-delay:2.4s;
+}
+
+@keyframes flamePop{
+  0%{
+    opacity:0;
+    transform:scale(0);
+  }
+
+  70%{
+    transform:scale(1.3);
+  }
+
+  100%{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+.intro-title{
+  margin-top:10px;
+  color:#fff;
+  font-size:2rem;
+  font-weight:700;
+  opacity:0;
+  transform:translateY(20px);
+
+  animation:titleReveal 1s ease forwards;
+  animation-delay:3s;
+
+  text-shadow:
+    0 0 10px rgba(255,255,255,.5),
+    0 0 30px rgba(255,255,255,.3);
+}
+
+@keyframes titleReveal{
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+/* Confetti */
+
+.confetti-container{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+}
+
+.confetti{
+  position:absolute;
+  width:8px;
+  height:14px;
+  border-radius:20px;
+
+  background:rgba(255,255,255,.8);
+
+  animation:floatConfetti linear infinite;
+}
+
+@keyframes floatConfetti{
+
+  0%{
+    transform:
+      translateY(-100px)
+      rotate(0deg);
+
+    opacity:0;
+  }
+
+  10%{
+    opacity:1;
+  }
+
+  100%{
+    transform:
+      translateY(120vh)
+      rotate(360deg);
+
+    opacity:0;
+  }
+} 
   </style>
 </head>
 <body>
+  <!-- Intro Cinematic Screen -->
+<div id="intro-screen">
+
+  <!-- Floating Confetti -->
+  <div class="confetti-container"></div>
+
+  <div class="intro-content">
+
+    <!-- Cake SVG -->
+    <svg class="cake-svg" viewBox="0 0 300 300">
+
+      <!-- Plate -->
+      <line class="draw line1" x1="70" y1="220" x2="230" y2="220" />
+
+      <!-- Cake Base -->
+      <rect class="draw line2" x="85" y="150" width="130" height="70" rx="8"/>
+
+      <!-- Cake Top -->
+      <rect class="draw line3" x="105" y="110" width="90" height="40" rx="8"/>
+
+      <!-- Candle -->
+      <line class="draw line4" x1="150" y1="80" x2="150" y2="110"/>
+
+      <!-- Flame -->
+      <circle class="flame" cx="150" cy="68" r="8"/>
+
+    </svg>
+
+    <h1 class="intro-title">
+      Happy 21st Birthday! Mona 💖
+    </h1>
+
+  </div>
+</div>
 
   
 
@@ -627,9 +1032,46 @@ body.bg-night::before{
       <button id="chat-send-btn">إرسال</button>
     </div>
   </section>
-
+  
   <script>
+/* =========================
+   INTRO CONFETTI
+========================= */
 
+const confettiContainer =
+document.querySelector(".confetti-container");
+
+function createConfetti(){
+
+  if(!confettiContainer) return;
+
+  const confetti =
+  document.createElement("span");
+
+  confetti.className = "confetti";
+
+  confetti.style.left =
+    Math.random() * 100 + "%";
+
+  confetti.style.animationDuration =
+    4 + Math.random() * 4 + "s";
+
+  confetti.style.opacity =
+    Math.random();
+
+  confetti.style.transform =
+    `scale(${0.6 + Math.random()})`;
+
+  confettiContainer.appendChild(confetti);
+
+  setTimeout(()=>{
+    confetti.remove();
+  },8000);
+}
+
+setInterval(createConfetti,180);
+
+    
     /*********** بيانات الصور والفيديوهات ***********/
     const mediaItems = [
       { type:"image", src:"image/Screenshot_٢٠٢٥-٠٥-١١-١٣-١٦-٥٥-٢٠٤_com.facebook.katana.jpg",
@@ -1092,7 +1534,7 @@ const bgMusic = document.getElementById("bg-music");
       if(!heartsContainer) return;
       const heart = document.createElement("div");
       heart.className = "heart";
-            heart.textContent = "💔";
+            heart.textContent = "💖";
 
 
       const left = Math.random() * 100;
