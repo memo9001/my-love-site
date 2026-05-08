@@ -616,6 +616,130 @@ body.bg-night::before{
     justify-content:center;
   }
 }
+
+    /* =========================
+   DIGITAL LOVE CARD
+========================= */
+
+.love-popup{
+
+  position:fixed;
+
+  inset:0;
+
+  background:
+    rgba(255,182,216,.25);
+
+  backdrop-filter:blur(12px);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  z-index:9999999;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:.5s ease;
+}
+
+.love-popup.active{
+
+  opacity:1;
+
+  pointer-events:auto;
+}
+
+.love-card{
+
+  width:min(90%,500px);
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff,
+      #ffe7f2
+    );
+
+  border-radius:30px;
+
+  padding:30px;
+
+  position:relative;
+
+  transform:
+    rotateY(90deg)
+    scale(.8);
+
+  transform-style:preserve-3d;
+
+  transition:
+    transform .8s cubic-bezier(.22,1,.36,1);
+
+  box-shadow:
+    0 20px 60px rgba(255,105,180,.25);
+}
+
+.love-popup.active .love-card{
+
+  transform:
+    rotateY(0deg)
+    scale(1);
+}
+
+.love-card h3{
+
+  font-size:2rem;
+
+  color:#ff4f93;
+
+  margin-bottom:16px;
+
+  text-align:center;
+}
+
+.love-card p{
+
+  color:#7a2955;
+
+  line-height:2;
+
+  font-size:1rem;
+
+  text-align:center;
+}
+
+.close-love-card{
+
+  position:absolute;
+
+  top:12px;
+  right:12px;
+
+  width:40px;
+  height:40px;
+
+  border:none;
+
+  border-radius:50%;
+
+  cursor:pointer;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff5c8d,
+      #ff2d6f
+    );
+
+  color:#fff;
+
+  font-size:1.1rem;
+}
     
 @media(max-width:600px){
       .card{padding:16px 12px;}
@@ -1995,10 +2119,93 @@ submitBtn.onclick = async () => {
   }
 };
 
+/* =========================
+   LOVE CARD POPUP
+========================= */
+
+const openCardBtn =
+document.getElementById("open-card-btn");
+
+const lovePopup =
+document.getElementById("love-popup");
+
+const closeLoveCard =
+document.getElementById("close-love-card");
+
+if(openCardBtn){
+
+  openCardBtn.addEventListener("click", ()=>{
+
+    lovePopup.classList.add("active");
+
+  });
+
+}
+
+if(closeLoveCard){
+
+  closeLoveCard.addEventListener("click", ()=>{
+
+    lovePopup.classList.remove("active");
+
+  });
+
+}
+
+if(lovePopup){
+
+  lovePopup.addEventListener("click",(e)=>{
+
+    if(e.target === lovePopup){
+
+      lovePopup.classList.remove("active");
+
+    }
+
+  });
+
+}
 
 
 </script>
 
+  <!-- =========================
+     LOVE POPUP CARD
+========================= -->
+
+<div class="love-popup" id="love-popup">
+
+  <div class="love-card">
+
+    <button
+      class="close-love-card"
+      id="close-love-card">
+      ✕
+    </button>
+
+    <h3>
+      To Mona 💖
+    </h3>
+
+    <p>
+      يا أجمل صدفة حصلتلي في حياتي...
+      <br><br>
+
+      كل لحظة معاكي بتحسسني
+      إن الدنيا لسه فيها حاجات حلوة.
+      <br><br>
+
+      وجودك جنبي أمان،
+      وضحكتك حياة،
+      وعينيكي وطن نفسي أفضل فيه العمر كله.
+      <br><br>
+
+      Happy Birthday My Love 💌
+    </p>
+
+  </div>
+
+</div>
 
 </body>
 
