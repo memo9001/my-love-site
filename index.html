@@ -510,6 +510,69 @@ body.bg-night::before{
   flex-wrap:wrap;
 }
 
+.continue-btn{
+
+  margin-top:18px;
+
+  border:none;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff2f7f,
+      #ff5fa2
+    );
+
+  color:#fff;
+
+  padding:
+    14px 26px;
+
+  border-radius:999px;
+
+  font-size:1rem;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  box-shadow:
+    0 10px 25px rgba(255,47,127,.35);
+
+  transition:
+    transform .35s ease,
+    box-shadow .35s ease,
+    opacity .35s ease;
+
+  animation:
+    continueFloat 2.5s ease-in-out infinite;
+}
+
+.continue-btn:hover{
+
+  transform:
+    translateY(-4px)
+    scale(1.04);
+
+  box-shadow:
+    0 16px 35px rgba(255,47,127,.45);
+}
+
+@keyframes continueFloat{
+
+  0%{
+    transform:translateY(0px);
+  }
+
+  50%{
+    transform:translateY(-6px);
+  }
+
+  100%{
+    transform:translateY(0px);
+  }
+}
+    
 .ui-btn{
 
   border:none;
@@ -799,6 +862,364 @@ body.bg-night::before{
 
   pointer-events:none;
 }
+
+ /* =========================
+   ENVELOPE SCENE
+========================= */
+
+.envelope-scene{
+
+  position:relative;
+
+  min-height:100vh;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  overflow:hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ff2d55,
+      #ff003c
+    );
+
+  margin-top:120px;
+}
+
+/* Floating Hearts */
+
+.floating-hearts{
+
+  position:absolute;
+
+  inset:0;
+
+  overflow:hidden;
+}
+
+.floating-hearts span{
+
+  position:absolute;
+
+  color:rgba(255,255,255,.18);
+
+  font-size:22px;
+
+  animation:
+    floatingHeart linear infinite;
+}
+
+@keyframes floatingHeart{
+
+  from{
+
+    transform:
+      translateY(100vh)
+      scale(.7);
+
+    opacity:0;
+  }
+
+  to{
+
+    transform:
+      translateY(-120vh)
+      scale(1.4);
+
+    opacity:1;
+  }
+
+}
+
+/* CONTENT */
+
+.envelope-wrapper{
+
+  position:relative;
+
+  text-align:center;
+
+  z-index:2;
+}
+
+.envelope-title{
+
+  color:#fff;
+
+  font-size:3rem;
+
+  font-weight:700;
+
+  margin-bottom:10px;
+
+  text-shadow:
+    0 10px 30px rgba(0,0,0,.2);
+}
+
+.envelope-sub{
+
+  color:rgba(255,255,255,.8);
+
+  margin-bottom:40px;
+
+  font-size:1.1rem;
+}
+
+/* ENVELOPE */
+
+.envelope{
+
+  position:relative;
+
+  width:320px;
+
+  height:220px;
+
+  margin:auto;
+
+  perspective:1200px;
+}
+
+.envelope-body{
+
+  position:absolute;
+
+  inset:0;
+
+  background:#fff;
+
+  border-radius:0 0 18px 18px;
+
+  box-shadow:
+    0 30px 60px rgba(0,0,0,.2);
+}
+
+.envelope-top{
+
+  position:absolute;
+
+  top:0;
+  left:0;
+
+  width:100%;
+  height:120px;
+
+  background:#ffe2ea;
+
+  clip-path:
+    polygon(
+      0 0,
+      50% 100%,
+      100% 0
+    );
+
+  transform-origin:top;
+
+  transition:
+    transform 1s cubic-bezier(.22,1,.36,1);
+
+  z-index:3;
+}
+
+.envelope.open
+.envelope-top{
+
+  transform:
+    rotateX(180deg);
+}
+
+.envelope-heart{
+
+  position:absolute;
+
+  inset:0;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:3rem;
+
+  z-index:4;
+
+  transition:.5s;
+}
+
+.envelope.open
+.envelope-heart{
+
+  opacity:0;
+
+  transform:
+    scale(0);
+}
+
+/* BUTTON */
+
+.open-envelope-btn{
+
+  margin-top:40px;
+
+  border:none;
+
+  background:#fff;
+
+  color:#ff2d55;
+
+  padding:16px 36px;
+
+  border-radius:999px;
+
+  font-size:1rem;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.35s;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,.18);
+}
+
+.open-envelope-btn:hover{/* =========================
+   LOVE LETTERS
+========================= */
+
+.letters-container{
+
+  position:absolute;
+
+  inset:0;
+
+  pointer-events:none;
+}
+
+.love-letter{
+
+  position:absolute;
+
+  width:220px;
+
+  background:
+    rgba(255,255,255,.96);
+
+  color:#ff2d55;
+
+  padding:18px;
+
+  border-radius:24px;
+
+  font-size:.95rem;
+
+  line-height:1.8;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,.15);
+
+  opacity:0;
+
+  transform:
+    scale(.5)
+    translateY(40px);
+
+  transition:
+    1s cubic-bezier(.22,1,.36,1);
+}
+
+/* عند فتح الظرف */
+
+.envelope.open
+.love-letter{
+
+  opacity:1;
+}
+
+/* توزيع الرسائل */
+
+.envelope.open .letter1{
+
+  transform:
+    translate(-320px,-240px)
+    rotate(-12deg);
+
+  transition-delay:.1s;
+}
+
+.envelope.open .letter2{
+
+  transform:
+    translate(260px,-260px)
+    rotate(10deg);
+
+  transition-delay:.2s;
+}
+
+.envelope.open .letter3{
+
+  transform:
+    translate(-420px,40px)
+    rotate(-8deg);
+
+  transition-delay:.3s;
+}
+
+.envelope.open .letter4{
+
+  transform:
+    translate(360px,20px)
+    rotate(12deg);
+
+  transition-delay:.4s;
+}
+
+.envelope.open .letter5{
+
+  transform:
+    translate(-240px,260px)
+    rotate(-10deg);
+
+  transition-delay:.5s;
+}
+
+.envelope.open .letter6{
+
+  transform:
+    translate(240px,250px)
+    rotate(9deg);
+
+  transition-delay:.6s;
+}
+
+.envelope.open .letter7{
+
+  transform:
+    translate(-40px,-340px)
+    rotate(-4deg);
+
+  transition-delay:.7s;
+}
+
+.envelope.open .letter8{
+
+  transform:
+    translate(20px,320px)
+    rotate(5deg);
+
+  transition-delay:.8s;
+}
+
+  transform:
+    translateY(-6px)
+    scale(1.05);
+}
     
 @media(max-width:900px){
 
@@ -941,6 +1362,266 @@ body.bg-night::before{
   color:#fff;
 
   font-size:1.1rem;
+}
+
+/* =========================
+   LOVE ENVELOPE SCENE
+========================= */
+
+#love-scene{
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:9999999;
+
+  background:
+    radial-gradient(
+      circle at top,
+      #ff4d6d,
+      #ff1744,
+      #c4002f
+    );
+
+  overflow:hidden;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transition:
+    opacity 1s ease;
+}
+
+#love-scene.active{
+
+  opacity:1;
+
+  pointer-events:auto;
+}
+
+/* Floating hearts */
+
+.love-floating-heart{
+
+  position:absolute;
+
+  color:rgba(255,255,255,.18);
+
+  animation:
+    floatLoveHeart linear infinite;
+}
+
+@keyframes floatLoveHeart{
+
+  from{
+    transform:
+      translateY(120vh)
+      scale(.6);
+
+    opacity:0;
+  }
+
+  20%{
+    opacity:1;
+  }
+
+  to{
+    transform:
+      translateY(-120vh)
+      scale(1.2);
+
+    opacity:0;
+  }
+}
+
+/* Envelope */
+
+.envelope-wrap{
+
+  position:relative;
+
+  width:320px;
+
+  height:230px;
+
+  perspective:1200px;
+}
+
+.envelope{
+
+  position:absolute;
+
+  inset:0;
+
+  background:#fff;
+
+  border-radius:12px;
+
+  overflow:hidden;
+
+  box-shadow:
+    0 30px 60px rgba(0,0,0,.25);
+}
+
+/* Top */
+
+.envelope-top{
+
+  position:absolute;
+
+  top:0;
+
+  left:0;
+
+  width:100%;
+
+  height:120px;
+
+  background:#ffd6df;
+
+  clip-path:
+    polygon(
+      0 0,
+      100% 0,
+      50% 100%
+    );
+
+  transform-origin:top;
+
+  transition:
+    transform 1s ease;
+}
+
+/* Open Animation */
+
+.envelope.open .envelope-top{
+
+  transform:
+    rotateX(180deg);
+}
+
+/* Body */
+
+.envelope-body{
+
+  position:absolute;
+
+  inset:0;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:10px;
+
+  z-index:2;
+}
+
+.envelope-title{
+
+  font-size:1.3rem;
+
+  font-weight:700;
+
+  color:#ff1744;
+}
+
+.envelope-sub{
+
+  color:#d81b60;
+
+  font-size:.95rem;
+}
+
+.open-envelope-btn{
+
+  margin-top:12px;
+
+  border:none;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff1744,
+      #ff5c8a
+    );
+
+  color:#fff;
+
+  padding:
+    12px 22px;
+
+  border-radius:999px;
+
+  cursor:pointer;
+
+  font-weight:700;
+
+  box-shadow:
+    0 12px 24px rgba(255,23,68,.35);
+
+  transition:
+    transform .35s ease;
+}
+
+.open-envelope-btn:hover{
+
+  transform:
+    scale(1.05);
+}
+
+/* Flying Cards */
+
+.love-message-card{
+
+  position:absolute;
+
+  width:240px;
+
+  min-height:160px;
+
+  background:
+    rgba(255,255,255,.96);
+
+  border-radius:24px;
+
+  padding:18px;
+
+  color:#7a1036;
+
+  line-height:1.9;
+
+  box-shadow:
+    0 20px 45px rgba(0,0,0,.18);
+
+  backdrop-filter:blur(10px);
+
+  opacity:0;
+
+  transform:
+    translate(-50%,-50%)
+    scale(.4)
+    rotate(0deg);
+
+  transition:
+    1.2s cubic-bezier(.19,1,.22,1);
+}
+
+.love-message-card.show{
+
+  opacity:1;
 }
     
 @media(max-width:600px){
@@ -1213,6 +1894,34 @@ body.bg-night::before{
     😊 Message
 
   </button>
+   <div class="action-buttons">
+
+  <button
+    class="romantic-btn"
+    id="open-card-btn">
+
+    💖 Click Here
+
+  </button>
+
+  <button
+    class="message-btn"
+    id="message-btn">
+
+    😊 Message
+
+  </button>
+
+  <button
+    class="continue-btn"
+    id="continue-btn">
+
+    Continue 💌
+
+  </button>
+
+</div>
+         
 
   <div class="message-tooltip"
        id="message-tooltip">
@@ -2398,6 +3107,7 @@ submitBtn.onclick = async () => {
     submitBtn.textContent = "رفع الذكرى 💘";
   }
 };
+  
 
 /* =========================
    LOVE CARD POPUP
@@ -2442,7 +3152,65 @@ if(messageBtn){
   });
 
 } 
+  
+/* =========================
+   ENVELOPE OPEN
+========================= */
 
+const envelope =
+document.querySelector(".envelope");
+
+const openEnvelopeBtn =
+document.getElementById("open-envelope-btn");
+
+if(openEnvelopeBtn){
+
+  openEnvelopeBtn.addEventListener("click",()=>{
+
+    envelope.classList.toggle("open");
+
+  });
+
+}
+
+/* =========================
+   ENVELOPE FLOATING HEARTS
+========================= */
+
+const floatingHearts =
+document.querySelector(".floating-hearts");
+
+function createEnvelopeHeart(){
+
+  if(!floatingHearts) return;
+
+  const heart =
+  document.createElement("span");
+
+  heart.innerHTML = "❤";
+
+  heart.style.left =
+    Math.random() * 100 + "%";
+
+  heart.style.animationDuration =
+    6 + Math.random() * 6 + "s";
+
+  heart.style.fontSize =
+    18 + Math.random() * 40 + "px";
+
+  floatingHearts.appendChild(heart);
+
+  setTimeout(()=>{
+
+    heart.remove();
+
+  },12000);
+
+}
+
+setInterval(createEnvelopeHeart,400);
+  
+  كمل 
 if(closeLoveCard){
 
   closeLoveCard.addEventListener("click", ()=>{
@@ -2508,6 +3276,303 @@ if(lovePopup){
 
 </div>
 
+<!-- =========================
+     ENVELOPE SCENE
+========================= -->
+
+<section class="envelope-scene"
+         id="envelope-scene">
+
+  <div class="floating-hearts"></div>
+
+  <div class="envelope-wrapper">
+
+    <div class="envelope-title">
+      Envelope Of Love 💌
+    </div>
+
+    <div class="envelope-sub">
+      Dear Mona
+    </div>
+
+    <!-- ENVELOPE -->
+    <div class="envelope">
+
+      <div class="envelope-top"></div>
+
+      <div class="envelope-body"></div>
+
+      <div class="envelope-heart">
+        ❤️
+      </div>
+
+  <!-- LETTERS -->
+
+<div class="letters-container">
+
+  <div class="love-letter letter1">
+    إلى منى، يا من سكنتِ الروح
+    وتربعتِ على عرش القلب 💖
+  </div>
+
+  <div class="love-letter letter2">
+    كل ضحكة منكِ كانت
+    سبب سعادة لقلبي ✨
+  </div>
+
+  <div class="love-letter letter3">
+    أحبك بكل تفاصيلك،
+    بكل عفويتك،
+    بكل جمالك 🌸
+  </div>
+
+  <div class="love-letter letter4">
+    وجودك في حياتي
+    أجمل صدفة حصلتلي 💌
+  </div>
+
+  <div class="love-letter letter5">
+    كل عام وأنتِ
+    أجمل أقداري 💖
+  </div>
+
+  <div class="love-letter letter6">
+    أتمنى نكمل العمر كله
+    سوا يا منى ✨
+  </div>
+
+  <div class="love-letter letter7">
+    عينيكي وطن،
+    وقلبك أمان،
+    وضحكتك حياة 😭💖
+  </div>
+
+  <div class="love-letter letter8">
+    Happy Birthday
+    My Love 💌
+  </div>
+
+</div>
+      
+    </div>
+
+    <button class="open-envelope-btn"
+            id="open-envelope-btn">
+
+      Open 💖
+
+    </button>
+
+  </div>
+
+</section>
+
+<!-- =========================
+     LOVE ENVELOPE SCENE
+========================= -->
+
+<section id="love-scene">
+
+  <!-- Floating Hearts -->
+  <div id="love-hearts"></div>
+
+  <div class="envelope-wrap">
+
+    <div class="envelope" id="envelope">
+
+      <div class="envelope-top"></div>
+
+      <div class="envelope-body">
+
+        <div class="envelope-title">
+          Envelope Of Love 💌
+        </div>
+
+        <div class="envelope-sub">
+          Dear Mona 💖
+        </div>
+
+        <button
+          class="open-envelope-btn"
+          id="open-envelope-btn">
+
+          Open 💌
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Floating Message Cards -->
+
+  <div class="love-message-card">
+    إلى منى، يا من سكنتِ الروح وتربعتِ على عرش القلب.. كل عام وأنتِ النبض الذي يحيي أيامي، والضوء الذي ينير عتمتي.
+  </div>
+
+  <div class="love-message-card">
+    أتذكر دائمًا تفاصيل بدايتنا، وكيف تحولت الصدفة إلى أجمل قصة حب. كل موقف بيننا، كل ضحكة، وكل حديث طويل في منتصف الليل محفور في ذاكرتي.
+  </div>
+
+  <div class="love-message-card">
+    يقول نزار قباني: "إني أحبك عندما تبكينا".. وأنا أحب كل تفاصيلك، عنادك، ضحكتك، وطريقتك في خطف قلبي كل يوم.
+  </div>
+
+  <div class="love-message-card">
+    كنتِ دائمًا السند والملجأ. شكراً لأنكِ تتحملين جنوني، ولأنكِ دائمًا هنا من أجلي في أصعب الأوقات قبل أجملها.
+  </div>
+
+  <div class="love-message-card">
+    اليوم تكملين عامك الواحد والعشرين، وأنا أطمع أن أقضي معكِ كل الأعوام القادمة.
+  </div>
+
+  <div class="love-message-card">
+    كل رسالة منكِ، كل كلمة، تجعل قلبي يبتسم قبل وجهي.
+  </div>
+
+  <div class="love-message-card">
+    المسافات لا تعني شيئاً عندما يكون طيفكِ يسكن أفكاري في كل ثانية.
+  </div>
+
+  <div class="love-message-card">
+    أعدكِ أن أبقى بجانبكِ، أحبكِ في كل يوم أكثر من الذي قبله ❤️
+  </div>
+
+</section>  
+
+<script>
+
+/* =========================
+   LOVE SCENE
+========================= */
+
+const continueBtn =
+document.getElementById("continue-btn");
+
+const loveScene =
+document.getElementById("love-scene");
+
+const envelope =
+document.getElementById("envelope");
+
+const openEnvelopeBtn =
+document.getElementById("open-envelope-btn");
+
+const allLoveCards =
+document.querySelectorAll(".love-message-card");
+
+const loveHearts =
+document.getElementById("love-hearts");
+
+/* OPEN RED SCENE */
+
+if(continueBtn){
+
+  continueBtn.addEventListener("click",()=>{
+
+    loveScene.classList.add("active");
+
+    createLoveHearts();
+
+  });
+
+}
+
+/* FLOATING HEARTS */
+
+function createLoveHearts(){
+
+  setInterval(()=>{
+
+    const heart =
+    document.createElement("div");
+
+    heart.className =
+    "love-floating-heart";
+
+    heart.innerHTML = "❤";
+
+    heart.style.left =
+      Math.random()*100 + "%";
+
+    heart.style.fontSize =
+      20 + Math.random()*50 + "px";
+
+    heart.style.animationDuration =
+      6 + Math.random()*6 + "s";
+
+    loveHearts.appendChild(heart);
+
+    setTimeout(()=>{
+      heart.remove();
+    },12000);
+
+  },300);
+
+}
+
+/* OPEN ENVELOPE */
+
+if(openEnvelopeBtn){
+
+  openEnvelopeBtn.addEventListener("click",()=>{
+
+    envelope.classList.add("open");
+
+    setTimeout(()=>{
+      launchLoveCards();
+    },800);
+
+  });
+
+}
+
+/* CINEMATIC CARDS */
+
+function launchLoveCards(){
+
+  const positions = [
+
+    {x:"12%", y:"18%"},
+    {x:"72%", y:"15%"},
+    {x:"80%", y:"55%"},
+    {x:"14%", y:"60%"},
+    {x:"50%", y:"12%"},
+    {x:"50%", y:"75%"},
+    {x:"30%", y:"40%"},
+    {x:"72%", y:"38%"}
+
+  ];
+
+  allLoveCards.forEach((card,index)=>{
+
+    setTimeout(()=>{
+
+      card.classList.add("show");
+
+      card.style.left =
+        positions[index].x;
+
+      card.style.top =
+        positions[index].y;
+
+      card.style.transform =
+        `
+        translate(-50%,-50%)
+        scale(1)
+        rotate(${Math.random()*14-7}deg)
+        `;
+
+    },index * 300);
+
+  });
+
+}
+
+</script>  
+  
 </body>
 
 </html>
