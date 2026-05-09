@@ -1853,10 +1853,61 @@ body.bg-night::before{
   </style>
 </head>
 <body>
-  <!-- Intro Cinematic Screen -->
+<!-- =========================
+     INTRO SCREEN
+========================= -->
+
 <div id="intro-screen">
 
-  <!-- =========================
+  <!-- Floating Confetti -->
+  <div class="confetti-container"></div>
+
+  <div class="intro-content">
+
+    <svg class="cake-svg" viewBox="0 0 300 300">
+
+      <line class="draw line1"
+            x1="70"
+            y1="220"
+            x2="230"
+            y2="220" />
+
+      <rect class="draw line2"
+            x="85"
+            y="150"
+            width="130"
+            height="70"
+            rx="8"/>
+
+      <rect class="draw line3"
+            x="105"
+            y="110"
+            width="90"
+            height="40"
+            rx="8"/>
+
+      <line class="draw line4"
+            x1="150"
+            y1="80"
+            x2="150"
+            y2="110"/>
+
+      <circle class="flame"
+              cx="150"
+              cy="68"
+              r="8"/>
+
+    </svg>
+
+    <h1 class="intro-title">
+      Happy 21st Birthday! Mona 💖
+    </h1>
+
+  </div>
+
+</div>
+
+<!-- =========================
      BIRTHDAY HERO SECTION
 ========================= -->
 
@@ -1872,7 +1923,7 @@ body.bg-night::before{
       </h2>
 
       <button class="birthday-date">
-        18 July
+        July 18
       </button>
 
       <div class="action-buttons">
@@ -1885,53 +1936,33 @@ body.bg-night::before{
 
         </button>
 
-       <div class="message-wrap">
+        <div class="message-wrap">
 
-  <button
-    class="message-btn"
-    id="message-btn">
+          <button
+            class="message-btn"
+            id="message-btn">
 
-    😊 Message
+            😊 Message
 
-  </button>
-   <div class="action-buttons">
+          </button>
 
-  <button
-    class="romantic-btn"
-    id="open-card-btn">
+          <div class="message-tooltip"
+               id="message-tooltip">
 
-    💖 Click Here
+            You are the prettiest girl
+            in my whole world 💖
 
-  </button>
+          </div>
 
-  <button
-    class="message-btn"
-    id="message-btn">
+        </div>
 
-    😊 Message
+        <button
+          class="continue-btn"
+          id="continue-btn">
 
-  </button>
+          Continue 💌
 
-  <button
-    class="continue-btn"
-    id="continue-btn">
-
-    Continue 💌
-
-  </button>
-
-</div>
-         
-
-  <div class="message-tooltip"
-       id="message-tooltip">
-
-    You are the prettiest girl
-    in my whole world 💖
-
-  </div>
-
-</div>
+        </button>
 
       </div>
 
@@ -1940,20 +1971,16 @@ body.bg-night::before{
     <!-- RIGHT -->
     <div class="birthday-right">
 
-      <div class="mona-image-wrap">
-
-        <div class="mona-image-border"></div>
+      <div class="mona-frame">
 
         <img
-          src="mona-main.jpg"
-          class="mona-main-image"
-          alt="Mona"
-        >
+          src="image/mona-main.jpg"
+          alt="Mona">
 
       </div>
 
       <h3 class="dear-mona">
-        Dear Mona 💖
+        حبيبه قلبي مني 💖
       </h3>
 
     </div>
