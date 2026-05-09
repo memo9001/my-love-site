@@ -414,15 +414,22 @@ body.bg-afternoon{
 }
 
 body.bg-night{
-  background:radial-gradient(circle at top,#2b1338,#3b1f52,#4a2c69,#12071f);
+  background:
+    radial-gradient(circle at top,
+    #ffe3f1 0%,
+    #ffd4ea 30%,
+    #ffc1df 60%,
+    #ffb6d8 100%);
 }
 
 /* طبقة ليلية أغمق مع لمعة نجوم بسيطة */
 body.bg-night::before{
   background:
-    radial-gradient(circle at 10% 20%,rgba(255,255,255,0.25) 0,rgba(255,255,255,0) 40%),
-    radial-gradient(circle at 80% 10%,rgba(255,255,255,0.2) 0,rgba(255,255,255,0) 45%),
-    linear-gradient(to bottom,rgba(20,10,40,0.9),rgba(10,5,25,0.9));
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.15),
+      rgba(255,192,220,0.08)
+    );
 }
 
 /* =========================
@@ -1939,7 +1946,7 @@ body.bg-night::before{
           class="romantic-btn"
           id="open-card-btn">
 
-          💖 Click Here
+          💖 افتحي الرسالة
 
         </button>
 
@@ -1949,15 +1956,15 @@ body.bg-night::before{
             class="message-btn"
             id="message-btn">
 
-            😊 Message
+            😊 رساله لبنت قلبي
 
           </button>
 
           <div class="message-tooltip"
                id="message-tooltip">
 
-            You are the prettiest girl
-            in my whole world 💖
+            إنتِ أجمل بنت شافتها عيني
+وكل دنيتي بقت أحلى بيكي 💖
 
           </div>
 
@@ -1967,7 +1974,7 @@ body.bg-night::before{
           class="continue-btn"
           id="continue-btn">
 
-          Continue 💌
+          افتحي الظرف 💌
 
         </button>
 
@@ -3474,7 +3481,12 @@ if(loveScene){
 
   loveScene.addEventListener("click",(e)=>{
 
-    if(e.target === loveScene){
+    const envelopeWrap =
+    document.querySelector(".envelope-wrap");
+
+    if(
+      !envelopeWrap.contains(e.target)
+    ){
 
       loveScene.classList.remove("active");
 
