@@ -1864,9 +1864,79 @@ body.bg-night::before{
     opacity:0;
   }
 } 
+ /* =========================
+   COUNTDOWN BAR
+========================= */
+
+#birthday-countdown-bar{
+
+  position:fixed;
+
+  top:0;
+  left:0;
+
+  width:100%;
+
+  z-index:99999999;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffd700,
+      #ffcc00,
+      #fff1a8,
+      #ffd700
+    );
+
+  color:#7a3200;
+
+  text-align:center;
+
+  padding:12px 10px;
+
+  box-shadow:
+    0 8px 25px rgba(255,215,0,.45);
+
+  border-bottom:
+    3px solid rgba(255,255,255,.6);
+
+  backdrop-filter:blur(10px);
+}
+
+.countdown-decor{
+
+  font-size:1rem;
+
+  font-weight:700;
+
+  margin-bottom:4px;
+
+  text-shadow:
+    0 2px 10px rgba(255,255,255,.6);
+}
+
+#countdown-timer{
+
+  font-size:1.1rem;
+
+  font-weight:700;
+}
+    
   </style>
 </head>
 <body>
+  <div id="birthday-countdown-bar">
+
+  <div class="countdown-decor">
+    ✨💖✨ عيد ميلاد منى قرب ✨💖✨
+  </div>
+
+  <div id="countdown-timer">
+    جاري الحساب...
+  </div>
+
+</div>
+  
 <!-- =========================
      INTRO SCREEN
 ========================= -->
@@ -1937,7 +2007,7 @@ body.bg-night::before{
       </h2>
 
       <button class="birthday-date">
-        July 18
+        18 يوليو
       </button>
 
       <div class="action-buttons">
@@ -2190,6 +2260,164 @@ function createConfetti(){
 }
 
 setInterval(createConfetti,180);
+    /* =========================
+   BIRTHDAY TIMER SYSTEM
+========================= */
+
+const birthdayHero =
+document.querySelector(".birthday-hero");
+
+const introScreen =
+document.getElementById("intro-screen");
+
+const countdownBar =
+document.getElementById("birthday-countdown-bar");
+
+/* وقت مصر */
+
+function getEgyptTime(){
+
+  return new Date(
+    new Date().toLocaleString(
+      "en-US",
+      {timeZone:"Africa/Cairo"}
+    )
+  );
+
+}
+
+/* تاريخ البداية */
+
+const birthdayStart =
+new Date(2026,6,18,0,0,0);
+
+/*
+6 = يوليو
+لأن العد يبدأ من صفر
+*/
+
+/* نهاية الـ 7 أيام */
+
+const birthdayEnd =
+new Date(2026,6,25,0,0,0);
+
+function updateBirthdayMode(){
+
+  const now =
+  getEgyptTime();
+
+  /* قبل عيد الميلاد */
+
+  if(now < birthdayStart){
+
+    birthdayHero.style.display =
+    "none";
+
+    if(introScreen){
+
+      introScreen.style.display =
+      "none";
+
+    }
+
+    countdownBar.style.display =
+    "block";
+
+    updateCountdown();
+
+  }
+
+  /* وقت الحدث */
+
+  else if(
+    now >= birthdayStart &&
+    now <= birthdayEnd
+  ){
+
+    birthdayHero.style.display =
+    "block";
+
+    countdownBar.style.display =
+    "none";
+
+  }
+
+  /* بعد انتهاء الأسبوع */
+
+  else{
+
+    birthdayHero.style.display =
+    "none";
+
+    if(introScreen){
+
+      introScreen.style.display =
+      "none";
+
+    }
+
+    countdownBar.style.display =
+    "block";
+
+    countdownBar.innerHTML =
+    `
+      <div class="countdown-decor">
+        💖 انتهى أسبوع عيد الميلاد 💖
+      </div>
+    `;
+
+  }
+
+}
+
+/* العداد */
+
+function updateCountdown(){
+
+  const now =
+  getEgyptTime();
+
+  const diff =
+  birthdayStart - now;
+
+  if(diff <= 0) return;
+
+  const days =
+  Math.floor(diff / 1000 / 60 / 60 / 24);
+
+  const hours =
+  Math.floor(diff / 1000 / 60 / 60) % 24;
+
+  const minutes =
+  Math.floor(diff / 1000 / 60) % 60;
+
+  const seconds =
+  Math.floor(diff / 1000) % 60;
+
+  const timer =
+  document.getElementById(
+    "countdown-timer"
+  );
+
+  timer.innerHTML =
+  `
+  ⏳ باقي
+  ${days} يوم
+  ${hours} ساعة
+  ${minutes} دقيقة
+  ${seconds} ثانية
+  `;
+
+}
+
+updateBirthdayMode();
+
+setInterval(()=>{
+
+  updateBirthdayMode();
+
+},1000);
+    
 
     
     /*********** بيانات الصور والفيديوهات ***********/
