@@ -840,61 +840,6 @@ body.bg-night::before{
     scale(1);
 }
 
-  position:relative;
-}
-
-.message-tooltip{
-
-  position:absolute;
-
-  bottom:75px;
-  right:0;
-
-  width:240px;
-
-  background:#fff;
-
-  color:#ff4f93;
-
-  padding:16px;
-
-  border-radius:22px;
-
-  font-size:.95rem;
-
-  line-height:1.7;
-
-  box-shadow:
-    0 20px 40px rgba(0,0,0,.12);
-
-  opacity:0;
-
-  visibility:hidden;
-
-  transform:
-    translateY(10px)
-    scale(.95);
-
-  transition:.4s;
-
-}
-
-.message-tooltip.active{
-
-  opacity:1;
-
-  visibility:visible;
-
-  transform:
-    translateY(0)
-    scale(1);
-}
-
-  transform:
-    translateY(-6px)
-    scale(1.04);
-
-}
 
 /* GRID DECORATION */
 
@@ -1167,13 +1112,6 @@ body.bg-night::before{
   pointer-events:none;
 }
 
-  position:absolute;
-
-  inset:0;
-
-  pointer-events:none;
-}
-
 .love-letter{
 
   position:absolute;
@@ -1288,10 +1226,7 @@ body.bg-night::before{
   transition-delay:.8s;
 }
 
-  transform:
-    translateY(-6px)
-    scale(1.05);
-}
+
     
 @media(max-width:900px){
 
@@ -3197,6 +3132,30 @@ if(openCardBtn){
   });
 
 }
+if(closeLoveCard){
+
+  closeLoveCard.addEventListener("click", ()=>{
+
+    lovePopup.classList.remove("active");
+
+  });
+
+}
+
+if(lovePopup){
+
+  lovePopup.addEventListener("click",(e)=>{
+
+    if(e.target === lovePopup){
+
+      lovePopup.classList.remove("active");
+
+    }
+
+  });
+
+}
+  
 /* =========================
    CLOSE LOVE POPUP
 ========================= */
@@ -3487,7 +3446,52 @@ if(continueBtn){
   });
 
 }
+/* OPEN ENVELOPE */
 
+if(openEnvelopeBtn){
+
+  openEnvelopeBtn.addEventListener("click",()=>{
+
+    envelope.classList.add("open");
+
+    allLoveCards.forEach((card,index)=>{
+
+      setTimeout(()=>{
+
+        card.classList.add("show");
+
+      },300 * index);
+
+    });
+
+  });
+
+}
+
+/* CLOSE LOVE SCENE */
+
+if(loveScene){
+
+  loveScene.addEventListener("click",(e)=>{
+
+    if(e.target === loveScene){
+
+      loveScene.classList.remove("active");
+
+      envelope.classList.remove("open");
+
+      allLoveCards.forEach(card=>{
+
+        card.classList.remove("show");
+
+      });
+
+    }
+
+  });
+
+}
+  
 /* FLOATING HEARTS */
 
 function createLoveHearts(){
