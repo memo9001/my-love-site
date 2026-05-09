@@ -598,6 +598,208 @@ body.bg-night::before{
   font-family:cursive;
 }
 
+ /* =========================
+   BIRTHDAY HERO
+========================= */
+
+.birthday-hero{
+
+  position:relative;
+
+  min-height:100vh;
+
+  padding:120px 8%;
+
+  overflow:hidden;
+}
+
+.birthday-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  1fr 1fr;
+
+  align-items:center;
+
+  gap:80px;
+}
+
+/* LEFT */
+
+.birthday-left h2{
+
+  font-size:5rem;
+
+  line-height:1;
+
+  color:#fff;
+
+  text-shadow:
+    0 6px 0 #ff4f93,
+    0 12px 30px rgba(255,79,147,.35);
+
+}
+
+.birthday-date{
+
+  margin-top:28px;
+
+  border:none;
+
+  background:#ff4f93;
+
+  color:#fff;
+
+  padding:14px 34px;
+
+  border-radius:999px;
+
+  font-size:1.1rem;
+
+  font-weight:700;
+
+  box-shadow:
+    0 12px 30px rgba(255,79,147,.35);
+
+}
+
+.action-buttons{
+
+  display:flex;
+
+  gap:18px;
+
+  margin-top:30px;
+
+  flex-wrap:wrap;
+}
+
+.romantic-btn,
+.message-btn{
+
+  border:none;
+
+  padding:16px 28px;
+
+  border-radius:999px;
+
+  font-size:1rem;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.35s;
+
+}
+
+.romantic-btn{
+
+  background:#ff4f93;
+
+  color:#fff;
+
+  box-shadow:
+    0 14px 30px rgba(255,79,147,.35);
+
+}
+
+.message-btn{
+
+  background:#fff;
+
+  color:#ff4f93;
+}
+
+.romantic-btn:hover,
+.message-btn:hover{/* =========================
+   MESSAGE TOOLTIP
+========================= */
+
+.message-wrap{
+
+  position:relative;
+}
+
+.message-tooltip{
+
+  position:absolute;
+
+  bottom:75px;
+  right:0;
+
+  width:240px;
+
+  background:#fff;
+
+  color:#ff4f93;
+
+  padding:16px;
+
+  border-radius:22px;
+
+  font-size:.95rem;
+
+  line-height:1.7;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,.12);
+
+  opacity:0;
+
+  visibility:hidden;
+
+  transform:
+    translateY(10px)
+    scale(.95);
+
+  transition:.4s;
+
+}
+
+.message-tooltip.active{
+
+  opacity:1;
+
+  visibility:visible;
+
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+  transform:
+    translateY(-6px)
+    scale(1.04);
+
+}
+
+/* GRID DECORATION */
+
+.birthday-hero::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background-image:
+  linear-gradient(
+  rgba(255,255,255,.07) 1px,
+  transparent 1px),
+
+  linear-gradient(
+  90deg,
+  rgba(255,255,255,.07) 1px,
+  transparent 1px);
+
+  background-size:40px 40px;
+
+  pointer-events:none;
+}
+    
 @media(max-width:900px){
 
   .birthday-grid{
@@ -973,6 +1175,84 @@ body.bg-night::before{
   <!-- Intro Cinematic Screen -->
 <div id="intro-screen">
 
+  <!-- =========================
+     BIRTHDAY HERO SECTION
+========================= -->
+
+<section class="birthday-hero">
+
+  <div class="birthday-grid">
+
+    <!-- LEFT -->
+    <div class="birthday-left">
+
+      <h2>
+        Happy Birthday 💖
+      </h2>
+
+      <button class="birthday-date">
+        18 July
+      </button>
+
+      <div class="action-buttons">
+
+        <button
+          class="romantic-btn"
+          id="open-card-btn">
+
+          💖 Click Here
+
+        </button>
+
+       <div class="message-wrap">
+
+  <button
+    class="message-btn"
+    id="message-btn">
+
+    😊 Message
+
+  </button>
+
+  <div class="message-tooltip"
+       id="message-tooltip">
+
+    You are the prettiest girl
+    in my whole world 💖
+
+  </div>
+
+</div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="birthday-right">
+
+      <div class="mona-image-wrap">
+
+        <div class="mona-image-border"></div>
+
+        <img
+          src="mona-main.jpg"
+          class="mona-main-image"
+          alt="Mona"
+        >
+
+      </div>
+
+      <h3 class="dear-mona">
+        Dear Mona 💖
+      </h3>
+
+    </div>
+
+  </div>
+
+</section>
+  
   <!-- Floating Confetti -->
   <div class="confetti-container"></div>
 
@@ -2122,6 +2402,7 @@ submitBtn.onclick = async () => {
 /* =========================
    LOVE CARD POPUP
 ========================= */
+  
 
 const openCardBtn =
 document.getElementById("open-card-btn");
@@ -2141,6 +2422,26 @@ if(openCardBtn){
   });
 
 }
+
+ /* =========================
+   MESSAGE TOOLTIP
+========================= */
+
+const messageBtn =
+document.getElementById("message-btn");
+
+const messageTooltip =
+document.getElementById("message-tooltip");
+
+if(messageBtn){
+
+  messageBtn.addEventListener("click",()=>{
+
+    messageTooltip.classList.toggle("active");
+
+  });
+
+} 
 
 if(closeLoveCard){
 
