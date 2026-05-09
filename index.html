@@ -1147,11 +1147,25 @@ body.bg-night::before{
     0 20px 40px rgba(0,0,0,.18);
 }
 
-.open-envelope-btn:hover{/* =========================
+.open-envelope-btn:hover{
+
+  transform:
+    translateY(-6px)
+    scale(1.05);
+}
+
+/* =========================
    LOVE LETTERS
 ========================= */
 
 .letters-container{
+
+  position:absolute;
+
+  inset:0;
+
+  pointer-events:none;
+}
 
   position:absolute;
 
@@ -3183,6 +3197,38 @@ if(openCardBtn){
   });
 
 }
+/* =========================
+   CLOSE LOVE POPUP
+========================= */
+
+/* قفل الرسالة بزرار X */
+
+if(closeLoveCard){
+
+  closeLoveCard.addEventListener("click", ()=>{
+
+    lovePopup.classList.remove("active");
+
+  });
+
+}
+
+/* قفل الرسالة لما تدوس براها */
+
+if(lovePopup){
+
+  lovePopup.addEventListener("click",(e)=>{
+
+    if(e.target === lovePopup){
+
+      lovePopup.classList.remove("active");
+
+    }
+
+  });
+
+}
+  
 
  /* =========================
    MESSAGE TOOLTIP
@@ -3327,96 +3373,7 @@ if(lovePopup){
 
 </div>
 
-<!-- =========================
-     ENVELOPE SCENE
-========================= -->
 
-<section class="envelope-scene"
-         id="envelope-scene">
-
-  <div class="floating-hearts"></div>
-
-  <div class="envelope-wrapper">
-
-    <div class="envelope-title">
-      Envelope Of Love 💌
-    </div>
-
-    <div class="envelope-sub">
-      Dear Mona
-    </div>
-
-    <!-- ENVELOPE -->
-    <div class="envelope">
-
-      <div class="envelope-top"></div>
-
-      <div class="envelope-body"></div>
-
-      <div class="envelope-heart">
-        ❤️
-      </div>
-
-  <!-- LETTERS -->
-
-<div class="letters-container">
-
-  <div class="love-letter letter1">
-    إلى منى، يا من سكنتِ الروح
-    وتربعتِ على عرش القلب 💖
-  </div>
-
-  <div class="love-letter letter2">
-    كل ضحكة منكِ كانت
-    سبب سعادة لقلبي ✨
-  </div>
-
-  <div class="love-letter letter3">
-    أحبك بكل تفاصيلك،
-    بكل عفويتك،
-    بكل جمالك 🌸
-  </div>
-
-  <div class="love-letter letter4">
-    وجودك في حياتي
-    أجمل صدفة حصلتلي 💌
-  </div>
-
-  <div class="love-letter letter5">
-    كل عام وأنتِ
-    أجمل أقداري 💖
-  </div>
-
-  <div class="love-letter letter6">
-    أتمنى نكمل العمر كله
-    سوا يا منى ✨
-  </div>
-
-  <div class="love-letter letter7">
-    عينيكي وطن،
-    وقلبك أمان،
-    وضحكتك حياة 😭💖
-  </div>
-
-  <div class="love-letter letter8">
-    Happy Birthday
-    My Love 💌
-  </div>
-
-</div>
-      
-    </div>
-
-    <button class="open-envelope-btn"
-            id="open-envelope-btn">
-
-      Open 💖
-
-    </button>
-
-  </div>
-
-</section>
 
 <!-- =========================
      LOVE ENVELOPE SCENE
