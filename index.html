@@ -2940,40 +2940,7 @@ function startClock(){
 }
 
 
-/*********** تشغيل الأغاني كبلاي ليست ***********/
 
-
-    let currentTrackIndex = 0;
-
-    function loadCurrentTrack(){
-      if(!bgMusic) return;
-      bgMusic.src = playlist[currentTrackIndex];
-    }
-
-    function playCurrentTrack(){
-      if(!bgMusic) return;
-      bgMusic.volume = 0.8;
-      bgMusic.play().catch(()=>{});
-    }
-
-    // لما الأغنية تخلص → نروح للي بعدها
-    if (bgMusic){
-      bgMusic.addEventListener("ended", () => {
-        currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-        loadCurrentTrack();
-        playCurrentTrack();
-      });
-    }
-
-    // أول تشغيل (بعد تحميل الصفحة أو أول كليك)
-    function tryPlayMusic(){
-      if(!bgMusic) return;
-      // لو مفيش أغنية محمّلة، حمّل أول واحدة
-      if(!bgMusic.src){
-        loadCurrentTrack();
-      }
-      playCurrentTrack();
-    }
 
         window.addEventListener("load", () => {
       startClock();
@@ -2993,10 +2960,7 @@ function startClock(){
     });
 
 
-    document.addEventListener("click", function once(){
-      tryPlayMusic();
-      document.removeEventListener("click", once);
-    });
+    
 
 
     /*********** القلوب المتطايرة ***********/
@@ -3025,27 +2989,20 @@ function startClock(){
     }
 
     setInterval(createHeart,1200);
-/*********** إيقاف الأغنية عند تشغيل الفيديو ***********/
+/*********** إيقاف أغنية اليوتيوب عند تشغيل الفيديو ***********/
 function setupVideoListeners() {
   const videos = document.querySelectorAll("video");
-
   videos.forEach(video => {
-    // تشغيل الفيديو = وقف الأغنية
     video.addEventListener("play", () => {
-      if (bgMusic) bgMusic.pause();
-    });
-
-    // ايقاف مؤقت = شغل الأغنية
-    video.addEventListener("pause", () => {
-      if (bgMusic) bgMusic.play().catch(() => {});
-    });
-
-    // الفيديو يخلص = الأغنية ترجع
-    video.addEventListener("ended", () => {
-      if (bgMusic) bgMusic.play().catch(() => {});
+      if (typeof player !== "undefined" && player.pauseVideo) {
+        player.pauseVideo();
+        document.getElementById("play-song").textContent = "▶";
+        isPlaying = false;
+      }
     });
   });
 }
+setTimeout(setupVideoListeners, 500);
 
 // نستدعيها بعد ما الجاليري يتبني
 setTimeout(setupVideoListeners, 500);
