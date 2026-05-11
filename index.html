@@ -1953,31 +1953,42 @@ body.bg-night::before{
 
   transform:translateX(-50%);
 
-  display:flex;
+  display:flex !important;
 
   align-items:center;
+
+  justify-content:center;
 
   gap:12px;
 
   padding:12px 18px;
 
   background:
-    rgba(255,255,255,.18);
+    rgba(0,0,0,.55);
 
   backdrop-filter:blur(16px);
 
   border:
-    1px solid rgba(255,255,255,.35);
+    1px solid rgba(255,255,255,.25);
 
   border-radius:999px;
 
-  z-index:999999;
+  z-index:999999999999 !important;
 
-  box-shadow:
-    0 10px 30px rgba(255,105,180,.25);
+  opacity:1 !important;
+
+  visibility:visible !important;
+
+  pointer-events:auto !important;
+
+  overflow:visible !important;
+
 }
 
 #music-player-bar button{
+  position:relative;
+
+z-index:999999999999;
 
   border:none;
 
@@ -3942,6 +3953,7 @@ function launchLoveCards(){
   });
 
 }
+  
 </script>
 
 <!-- =========================
