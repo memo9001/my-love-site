@@ -3943,7 +3943,7 @@ let player;
 
 let currentSong = 0;
 
-let isPlaying = true;
+let isPlaying = false;
 
 const songs = [
 
@@ -3991,7 +3991,7 @@ function onYouTubeIframeAPIReady(){
       width:"0",
 
       videoId:
-      songs[currentSong].id,
+      songs[currentSong].videoId,
 
       playerVars:{
         autoplay:1,
@@ -4031,7 +4031,7 @@ function updateSongName(){
   document.getElementById(
     "song-name"
   ).textContent =
-  songs[currentSong].title;
+  songs[currentSong].name;
 
 }
 
@@ -4090,36 +4090,23 @@ document
   prevSong
 );
 
+// في البداية خالص نعرض زرار التشغيل
+document.getElementById("play-song").textContent = "▶";
+
 document
 .getElementById("play-song")
 .addEventListener(
   "click",
   ()=>{
-
     if(isPlaying){
-
       player.pauseVideo();
-
-      document
-      .getElementById(
-        "play-song"
-      ).textContent = "▶";
-
+      document.getElementById("play-song").textContent = "▶";
       isPlaying = false;
-
     }else{
-
       player.playVideo();
-
-      document
-      .getElementById(
-        "play-song"
-      ).textContent = "⏸";
-
+      document.getElementById("play-song").textContent = "⏸";
       isPlaying = true;
-
     }
-
   }
 );
 
