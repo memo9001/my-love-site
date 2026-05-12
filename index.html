@@ -3947,20 +3947,35 @@ let isPlaying = true;
 
 const songs = [
 
-  {
-    id:"dQw4w9WgXcQ",
-    title:"عمرو دياب ❤️"
-  },
+{
+  name:"عمرو دياب - تملي معاك",
+  videoId:"RyaLPYeanxY"
+},
 
-  {
-    id:"Zi_XLOBDo_Y",
-    title:"قمرين 🌙"
-  },
+{
+  name:"عمرو دياب - أماكن السهر",
+  videoId:"0NdYp4i_6SE"
+},
 
-  {
-    id:"OPf0YbXqDm0",
-    title:"أجمل عيون 💖"
-  }
+{
+  name:"عمرو دياب - يا أنا يا لأ",
+  videoId:"0Iu8dDAbjZ0"
+},
+
+{
+  name:"عمرو دياب - أنت الحظ",
+  videoId:"0wJ12gRUubc"
+},
+
+{
+  name:"عمرو دياب - وياه",
+  videoId:"S4Q52_o0T4M"
+},
+
+{
+  name:"عمرو دياب - العالم الله",
+  videoId:"kVJkM4JrJgM"
+}
 
 ];
 
@@ -4025,7 +4040,7 @@ function loadSong(index){
   currentSong = index;
 
   player.loadVideoById(
-    songs[currentSong].id
+    songs[currentSong].videoId
   );
 
   updateSongName();
