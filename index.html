@@ -2054,7 +2054,14 @@ z-index:999999999999;
   overflow:visible !important;
 
 }   
+   @keyframes pulseBtn {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+ 
   </style>
+  
 </head>
 <body>
   <div id="birthday-countdown-bar">
@@ -2223,14 +2230,22 @@ z-index:999999999999;
 
   <div class="container">
     <!-- العنوان -->
-   <section class="card hero">
+  <section class="card hero">
   <h1>
   أجمل وأسعد لحظات وذكريات لينا يا ست البنات
   يا <span class="mona-name">منونه</span> قلبي 💗
-</h1>
+  </h1>
 
   <p>كل صورة، كل فيديو هنا حتّة من قلبي ليكي… ذكريات بسيطة بس بالنسبالي هي أكبر وأحلى حكاية في حياتي.</p>
   <div id="date-time" class="date-time-box"></div>
+
+  <!-- ✨ الزرار الجديد اللي هينور لما المؤقت يخلص -->
+  <div id="new-site-btn-container" style="display: none; text-align: center; margin-top: 15px;">
+    <a href="https://mona-birthday.emadzead7.workers.dev" 
+       style="background: linear-gradient(135deg, #ff3b6b, #ff5c8a); color: white; padding: 14px 30px; border-radius: 50px; text-decoration: none; font-size: 1.1rem; font-weight: bold; box-shadow: 0 8px 20px rgba(255, 59, 107, 0.4); display: inline-block; animation: pulseBtn 2s infinite;">
+       ✨ مفاجأة عيد ميلادك الكبيرة جاهزة.. دوسي هنا ✨
+    </a>
+  </div>
 </section>
 
 
@@ -2435,71 +2450,41 @@ new Date(2026,6,25,0,0,0);
 
 function updateBirthdayMode(){
 
-  const now =
-  getEgyptTime();
+  const now = getEgyptTime();
+  const newSiteBtn = document.getElementById("new-site-btn-container"); 
 
   /* قبل عيد الميلاد */
-
   if(now < birthdayStart){
-
-    birthdayHero.style.display =
-    "none";
-
+    birthdayHero.style.display = "none";
     if(introScreen){
-
-      introScreen.style.display =
-      "none";
-
+      introScreen.style.display = "none";
     }
-
-    countdownBar.style.display =
-    "block";
-
+    countdownBar.style.display = "block";
     updateCountdown();
-
+    if(newSiteBtn) newSiteBtn.style.display = "none"; 
   }
 
   /* وقت الحدث */
-
-  else if(
-    now >= birthdayStart &&
-    now <= birthdayEnd
-  ){
-
-    birthdayHero.style.display =
-    "block";
-
-    countdownBar.style.display =
-    "none";
-
+  else if(now >= birthdayStart && now <= birthdayEnd){
+    birthdayHero.style.display = "block";
+    countdownBar.style.display = "none";
+    if(newSiteBtn) newSiteBtn.style.display = "block"; 
   }
 
   /* بعد انتهاء الأسبوع */
-
   else{
-
-    birthdayHero.style.display =
-    "none";
-
+    birthdayHero.style.display = "none";
     if(introScreen){
-
-      introScreen.style.display =
-      "none";
-
+      introScreen.style.display = "none";
     }
-
-    countdownBar.style.display =
-    "block";
-
-    countdownBar.innerHTML =
-    `
+    countdownBar.style.display = "block";
+    countdownBar.innerHTML = `
       <div class="countdown-decor">
         💖 انتهى أسبوع عيد الميلاد 💖
       </div>
     `;
-
+    if(newSiteBtn) newSiteBtn.style.display = "block"; 
   }
-
 }
 
 /* العداد */
